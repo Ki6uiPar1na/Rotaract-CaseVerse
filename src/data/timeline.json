@@ -1,0 +1,74 @@
+[
+  {
+    "id": "launch",
+    "title": "Competition Launch",
+    "description": "Official announcement of CaseVerse 2026 and case document release.",
+    "startDate": "2026-01-15",
+    "endDate": "2026-01-31",
+    "type": "pre-event",
+    "status": "upcoming"
+  },
+  {
+    "id": "registration",
+    "title": "Team Registration",
+    "description": "Open registration for teams of 3–4 undergraduate students.",
+    "startDate": "2026-02-01",
+    "endDate": "2026-03-15",
+    "type": "registration",
+    "status": "upcoming"
+  },
+  {
+    "id": "round-1",
+    "title": "Round 1 — Case Solution Submission",
+    "description": "Teams submit their pitch deck (max 16 slides) and one-page executive summary.",
+    "startDate": "2026-02-15",
+    "endDate": "2026-03-30",
+    "type": "round",
+    "status": "upcoming"
+  },
+  {
+    "id": "round-1-results",
+    "title": "Round 1 Results",
+    "description": "Shortlisted teams announced for Round 2.",
+    "startDate": "2026-04-05",
+    "endDate": "2026-04-05",
+    "type": "round",
+    "status": "upcoming"
+  },
+  {
+    "id": "round-2",
+    "title": "Round 2 — Online Video Content",
+    "description": "Shortlisted teams create and submit a 3-minute video presentation.",
+    "startDate": "2026-04-10",
+    "endDate": "2026-04-30",
+    "type": "round",
+    "status": "upcoming"
+  },
+  {
+    "id": "round-2-results",
+    "title": "Round 2 Results",
+    "description": "Finalist teams announced for the Grand Finale.",
+    "startDate": "2026-05-05",
+    "endDate": "2026-05-05",
+    "type": "round",
+    "status": "upcoming"
+  },
+  {
+    "id": "grand-finale",
+    "title": "Grand Finale",
+    "description": "Live pitch presentation and Focus Group Discussion at JKKNIU, Trishal, Mymensingh.",
+    "startDate": "2026-05-15",
+    "endDate": "2026-05-15",
+    "type": "finale",
+    "status": "upcoming"
+  },
+  {
+    "id": "results",
+    "title": "Results Announcement",
+    "description": "Champion, runner-up, and special recognition awards announced.",
+    "startDate": "2026-05-15",
+    "endDate": "2026-05-15",
+    "type": "finale",
+    "status": "upcoming"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "sponsor-1",
+    "name": "Grameenphone",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Grameenphone_logo.svg/200px-Grameenphone_logo.svg.png",
+    "category": "gold",
+    "website": "https://grameenphone.com",
+    "description": "Leading digital connectivity provider in Bangladesh."
+  },
+  {
+    "id": "sponsor-2",
+    "name": "BRAC Bank",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/09/BRAC_Bank_logo.svg/200px-BRAC_Bank_logo.svg.png",
+    "category": "silver",
+    "website": "https://bracbank.com",
+    "description": "One of the largest private sector banks in Bangladesh."
+  }
+]

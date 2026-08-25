@@ -1,0 +1,29 @@
+{
+  "title": "Competition Overview",
+  "description": "CaseVerse brings together university students from across Bangladesh to tackle real-world business challenges through the lens of sustainability. Teams of 3–4 undergraduate students compete across three rounds, developing strategic solutions aligned with the UN Sustainable Development Goals.",
+  "eligibility": [
+    "Open to all undergraduate students enrolled in recognized universities across Bangladesh",
+    "Teams must consist of 3–4 members from the same university",
+    "Each team must have a designated team leader",
+    "Members must provide valid student identification"
+  ],
+  "teamSize": {
+    "min": 3,
+    "max": 4
+  },
+  "targetParticipation": 200,
+  "format": "Three-round elimination competition with case analysis, video content creation, and a live grand finale.",
+  "sdgs": [3, 4, 6, 8, 9, 11, 12, 13],
+  "venue": "Jatiya Kabi Kazi Nazrul Islam University, Trishal, Mymensingh",
+  "philosophy": {
+    "title": "Business + Sustainability + Real-World Impact",
+    "description": "Every solution must balance business viability with environmental and social responsibility."
+  },
+  "prizes": [
+    { "place": "champion", "title": "Champion", "description": "To be announced", "icon": "trophy" },
+    { "place": "runner-up", "title": "1st Runner-up", "description": "To be announced", "icon": "medal" },
+    { "place": "second-runner-up", "title": "2nd Runner-up", "description": "To be announced", "icon": "award" },
+    { "place": "certificates", "title": "Certificates", "description": "All participants will receive certificates of participation.", "icon": "scroll" },
+    { "place": "special", "title": "Special Recognition", "description": "Outstanding individual contributions may receive special recognition.", "icon": "star" }
+  ]
+}

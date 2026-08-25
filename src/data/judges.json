@@ -1,0 +1,20 @@
+[
+  {
+    "id": "judge-1",
+    "name": "Dr. Ahsan Habib",
+    "photo": "https://i.pravatar.cc/300?img=11",
+    "designation": "Professor, Department of Business Administration",
+    "organization": "University of Dhaka",
+    "bio": "Dr. Habib has over 15 years of experience in strategic management and sustainable business practices. He has advised numerous organizations on SDG-aligned business models.",
+    "linkedin": "https://linkedin.com"
+  },
+  {
+    "id": "judge-2",
+    "name": "Farhana Rahman",
+    "photo": "https://i.pravatar.cc/300?img=5",
+    "designation": "Head of CSR & Sustainability",
+    "organization": "Bangladesh Centre for Advanced Studies",
+    "bio": "Farhana is a recognized voice in climate policy and sustainable development in South Asia, with a focus on youth-led innovation and social enterprise.",
+    "linkedin": "https://linkedin.com"
+  }
+]

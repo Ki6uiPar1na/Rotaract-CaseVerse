@@ -1,0 +1,95 @@
+[
+  {
+    "id": "round-1",
+    "number": 1,
+    "title": "Case Solution Submission",
+    "subtitle": "Pitch Deck + Executive Summary",
+    "description": "Teams analyze a provided business case and submit a comprehensive solution including a pitch deck and executive summary.",
+    "requirements": [
+      "Maximum 16-slide pitch deck",
+      "One-page executive summary",
+      "Problem analysis and root cause identification",
+      "Proposed sustainable business solution",
+      "Implementation strategy with timeline",
+      "Expected impact assessment aligned with relevant SDGs",
+      "Financial feasibility overview"
+    ],
+    "guidelines": [
+      "Solutions must demonstrate alignment with at least one of the 8 target SDGs",
+      "All submissions must be in PDF format",
+      "Pitch deck must follow the provided template",
+      "Executive summary must not exceed one page (A4)",
+      "Plagiarism will result in immediate disqualification",
+      "Team leader is responsible for final submission"
+    ],
+    "documents": [
+      { "name": "Case Document", "url": "#" },
+      { "name": "Pitch Deck Template", "url": "#" },
+      { "name": "Submission Guidelines", "url": "#" }
+    ],
+    "faq": [
+      {
+        "question": "Can we submit in a language other than English?",
+        "answer": "All submissions must be in English to ensure fairness in evaluation."
+      },
+      {
+        "question": "Is there a specific case study format?",
+        "answer": "The case document will be provided upon registration. Follow the standard business case analysis format."
+      }
+    ]
+  },
+  {
+    "id": "round-2",
+    "number": 2,
+    "title": "Online Video Content",
+    "subtitle": "3-Minute OVC",
+    "description": "Shortlisted teams from Round 1 create a compelling 3-minute video presenting their solution to a broader audience.",
+    "requirements": [
+      "Maximum 3-minute video (180 seconds)",
+      "Must cover: case analysis, proposed solution, implementation strategy, expected impact",
+      "Demonstrate innovation and creativity in presentation",
+      "Include visual aids and data visualization",
+      "Clear and professional audio quality",
+      "Upload to designated platform (link provided after Round 1 results)"
+    ],
+    "guidelines": [
+      "Videos must be in MP4 format, minimum 720p resolution",
+      "No watermarks from free editing software",
+      "Team members must appear in the video",
+      "Keep content professional and respectful",
+      "Do not include copyrighted music without permission",
+      "Submission deadline is strict — no extensions will be granted"
+    ],
+    "faq": [
+      {
+        "question": "What video editing tools can we use?",
+        "answer": "Any video editing tool is acceptable. Free options include DaVinci Resolve, CapCut, and iMovie."
+      },
+      {
+        "question": "Can we use AI-generated content in our video?",
+        "answer": "AI tools may be used for research assistance, but the core content and presentation must be original team work."
+      }
+    ]
+  },
+  {
+    "id": "grand-finale",
+    "number": 3,
+    "title": "Grand Finale",
+    "subtitle": "Live Pitch + Focus Group Discussion",
+    "description": "The top teams present their solutions live before a panel of judges, followed by a Focus Group Discussion (FGD) to assess critical thinking and strategic decision-making.",
+    "requirements": [
+      "Live pitch presentation (duration to be announced)",
+      "Focus Group Discussion (FGD) session",
+      "Professional attire required",
+      "All team members must be present",
+      "Presentation materials must be submitted before the event"
+    ],
+    "guidelines": [
+      "Teams must arrive at least 30 minutes before their scheduled time slot",
+      "Technical requirements for presentation will be provided in advance",
+      "Judges' decisions are final",
+      "Any form of misconduct will result in disqualification"
+    ],
+    "faq": []
+  }
+]

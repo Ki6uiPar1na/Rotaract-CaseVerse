@@ -1,0 +1,42 @@
+[
+  {
+    "id": "registration-open",
+    "slug": "registration-open",
+    "title": "Registration for CaseVerse 2026 Now Open",
+    "category": "announcement",
+    "date": "2026-02-01",
+    "author": "CaseVerse Team",
+    "coverImage": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=400&fit=crop",
+    "excerpt": "Team registration for Bangladesh's premier national SDG-aligned case competition is officially open.",
+    "content": "## Registration Now Open\n\nWe are thrilled to announce that registration for **CaseVerse 2026** is now officially open.\n\n### Who Can Participate?\n\n- Undergraduate students from recognized universities across Bangladesh\n- Teams of **3–4 members** from the same university\n\n### Important Dates\n\n| Milestone | Date |\n|-----------|------|\n| Registration Opens | February 1, 2026 |\n| Registration Closes | March 15, 2026 |\n| Round 1 Begins | April 1, 2026 |\n\n### How to Register\n\n1. Form your team of 3–4 members\n2. Visit the [Register page](/register)\n3. Fill in your team details\n4. Submit your registration\n\nDon't miss this opportunity to showcase your strategic thinking and innovation on a national platform!",
+    "contentFormat": "markdown",
+    "featured": true,
+    "tags": ["registration", "announcement", "open"]
+  },
+  {
+    "id": "sdg-workshop",
+    "slug": "sdg-workshop",
+    "title": "SDG Workshop Series Announced for Participants",
+    "category": "event-update",
+    "date": "2026-02-15",
+    "author": "CaseVerse Team",
+    "coverImage": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=400&fit=crop",
+    "excerpt": "A series of free workshops on Sustainable Development Goals will be held before the competition begins.",
+    "content": "We're excited to announce a **free workshop series** designed to help participants understand and align their solutions with the UN Sustainable Development Goals.\n\n## Workshop Schedule\n\n### Workshop 1: Understanding SDGs\n- **Date:** February 20, 2026\n- **Time:** 3:00 PM – 5:00 PM\n- **Platform:** Zoom (link will be shared after registration)\n\n### Workshop 2: Business Solutions for SDGs\n- **Date:** February 27, 2026\n- **Time:** 3:00 PM – 5:00 PM\n- **Platform:** Zoom\n\n### Workshop 3: Crafting Your Pitch\n- **Date:** March 5, 2026\n- **Time:** 3:00 PM – 5:00 PM\n- **Platform:** Zoom\n\n> These workshops are optional but highly recommended for all registered teams.\n\nRegister for the competition first to receive workshop invitations.",
+    "contentFormat": "markdown",
+    "tags": ["workshop", "sdg", "free", "event"]
+  },
+  {
+    "id": "round1-results",
+    "slug": "round1-results",
+    "title": "Round 1 Results Coming Soon",
+    "category": "result",
+    "date": "2026-04-15",
+    "author": "CaseVerse Team",
+    "coverImage": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop",
+    "excerpt": "Results for Round 1 (Case Solution Submission) will be announced shortly. Stay tuned for updates.",
+    "content": "Round 1 of CaseVerse 2026 has concluded. We received an overwhelming response from teams across Bangladesh.\n\nResults will be announced by **April 20, 2026**. Shortlisted teams will be notified via email.\n\n### What's Next?\n\n- Shortlisted teams advance to **Round 2 (Online Video Content)**\n- Round 2 guidelines will be shared with qualifying teams\n- Timeline for Round 2: April 25 – May 15, 2026\n\nThank you to all teams who participated. Good luck!",
+    "contentFormat": "markdown",
+    "tags": ["results", "round-1", "update"]
+  }
+]

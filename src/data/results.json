@@ -1,0 +1,26 @@
+[
+  {
+    "id": "phase-1",
+    "label": "Phase 1",
+    "title": "Case Solution Submission",
+    "status": "upcoming",
+    "description": "Shortlisted teams from the initial case analysis round.",
+    "results": []
+  },
+  {
+    "id": "phase-2",
+    "label": "Phase 2",
+    "title": "Online Video Content",
+    "status": "upcoming",
+    "description": "Top teams advancing after the 3-minute video presentation round.",
+    "results": []
+  },
+  {
+    "id": "final",
+    "label": "Grand Finale",
+    "title": "Final Round Results",
+    "status": "upcoming",
+    "description": "Champion, runners-up, and special recognition awards.",
+    "results": []
+  }
+]

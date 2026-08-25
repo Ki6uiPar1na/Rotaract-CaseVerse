@@ -1,0 +1,103 @@
+{
+  "name": "CaseVerse 2026",
+  "tagline": "Where Strategy Meets Sustainability",
+  "subtitle": "National SDG-Aligned Case Competition",
+  "year": 2026,
+  "registrationDeadline": "2026-03-15T23:59:59",
+  "countdownTarget": "2026-04-01T09:00:00",
+  "venue": {
+    "name": "Jatiya Kabi Kazi Nazrul Islam University",
+    "address": "Trishal, Mymensingh-2220",
+    "city": "Mymensingh",
+    "country": "Bangladesh"
+  },
+  "contact": {
+    "phone": "01626-845941",
+    "email": "rotaract.jkkniu@gmail.com",
+    "website": "racjkkniu.club"
+  },
+  "socials": [],
+  "navigation": [
+    { "label": "Home", "path": "/" },
+    { "label": "About", "path": "/about" },
+    {
+      "label": "Competition",
+      "path": "/competition",
+      "children": [
+        { "label": "Overview", "path": "/competition" },
+        { "label": "Round 1", "path": "/competition/round-1" },
+        { "label": "Round 2 — OVC", "path": "/competition/round-2" },
+        { "label": "Grand Finale", "path": "/competition/grand-finale" }
+      ]
+    },
+    { "label": "Timeline", "path": "/timeline" },
+    { "label": "News", "path": "/news" },
+    { "label": "Sponsors", "path": "/sponsors" },
+    { "label": "FAQ", "path": "/faq" },
+    { "label": "Contact", "path": "/contact" }
+  ],
+  "stats": [
+    { "value": "200+", "label": "Target Teams" },
+    { "value": "3", "label": "Competition Rounds" },
+    { "value": "8", "label": "SDG Areas" },
+    { "value": "1", "label": "Grand Finale" }
+  ],
+  "sdgs": [
+    {
+      "id": 3,
+      "title": "Good Health and Well-Being",
+      "description": "Ensure healthy lives and promote well-being for all at all ages.",
+      "icon": "heart-pulse"
+    },
+    {
+      "id": 4,
+      "title": "Quality Education",
+      "description": "Ensure inclusive and equitable quality education and promote lifelong learning opportunities.",
+      "icon": "graduation-cap"
+    },
+    {
+      "id": 6,
+      "title": "Clean Water and Sanitation",
+      "description": "Ensure availability and sustainable management of water and sanitation for all.",
+      "icon": "droplets"
+    },
+    {
+      "id": 8,
+      "title": "Decent Work and Economic Growth",
+      "description": "Promote sustained, inclusive and sustainable economic growth, full and productive employment.",
+      "icon": "trending-up"
+    },
+    {
+      "id": 9,
+      "title": "Industry, Innovation and Infrastructure",
+      "description": "Build resilient infrastructure, promote inclusive industrialization and foster innovation.",
+      "icon": "lightbulb"
+    },
+    {
+      "id": 11,
+      "title": "Sustainable Cities and Communities",
+      "description": "Make cities and human settlements inclusive, safe, resilient and sustainable.",
+      "icon": "building-2"
+    },
+    {
+      "id": 12,
+      "title": "Responsible Consumption and Production",
+      "description": "Ensure sustainable consumption and production patterns.",
+      "icon": "recycle"
+    },
+    {
+      "id": 13,
+      "title": "Climate Action",
+      "description": "Take urgent action to combat climate change and its impacts.",
+      "icon": "cloud-sun"
+    }
+  ],
+  "seo": {
+    "home": {
+      "title": "CaseVerse 2026 | National SDG-Aligned Case Competition",
+      "description": "Where Strategy Meets Sustainability. Join Bangladesh's premier national case competition focused on SDG-aligned business solutions.",
+      "ogTitle": "CaseVerse 2026 — Where Strategy Meets Sustainability",
+      "ogDescription": "National SDG-Aligned Case Competition organized by Rotaract Club of JKKNIU."
+    }
+  }
+}
