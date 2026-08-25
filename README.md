@@ -202,3 +202,4 @@ The registration form uses `localStorage` to persist drafts and store mock submi
 
 Private — CaseVerse 2026, Rotaract Club of JKKNIU
 # Rotaract-CaseVerse
+# Rotaract-CaseVerse
