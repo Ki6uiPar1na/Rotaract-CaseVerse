@@ -3,6 +3,7 @@
   "tagline": "Where Strategy Meets Sustainability",
   "subtitle": "National SDG-Aligned Case Competition",
   "year": 2026,
+  "registrationOpen": true,
   "registrationDeadline": "2026-03-15T23:59:59",
   "countdownTarget": "2026-04-01T09:00:00",
   "venue": {
@@ -34,10 +35,20 @@
     { "label": "News", "path": "/news" },
     { "label": "Sponsors", "path": "/sponsors" },
     { "label": "FAQ", "path": "/faq" },
-    { "label": "Contact", "path": "/contact" }
+    {
+      "label": "Quick Links",
+      "path": "/quick-links",
+      "children": [
+        { "label": "Contact", "path": "/contact" },
+        { "label": "Dashboard", "path": "/dashboard" },
+        { "label": "Results", "path": "/results" },
+        { "label": "Judges", "path": "/judges" },
+        { "label": "Prizes", "path": "/prizes" }
+      ]
+    }
   ],
   "stats": [
-    { "value": "200+", "label": "Target Teams" },
+    { "value": "30K", "label": "Total Prize Money" },
     { "value": "3", "label": "Competition Rounds" },
     { "value": "8", "label": "SDG Areas" },
     { "value": "1", "label": "Grand Finale" }

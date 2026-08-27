@@ -58,4 +58,9 @@ export const api = {
       request(`/timeline/${id}`, { method: "PUT", body: JSON.stringify(data) }),
     remove: (id: string) => request(`/timeline/${id}`, { method: "DELETE" }),
   },
+  site: {
+    get: () => request<Record<string, unknown>>("/site"),
+    update: (data: Record<string, unknown>) =>
+      request("/site", { method: "PUT", body: JSON.stringify(data) }),
+  },
 };

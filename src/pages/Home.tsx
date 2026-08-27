@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Users, Layers, Target, Trophy, Calendar, Newspaper, HelpCircle, ChevronRight, Building2, Mail, Phone } from "lucide-react";
@@ -7,6 +8,9 @@ import { getSite, getTimeline, getNews, getFaq, getSponsors } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/ui/CTASection";
 import EmptyState from "@/components/ui/EmptyState";
+import type { TimelineItem } from "@/types/timeline";
+import type { NewsArticle } from "@/types/news";
+import type { Sponsor } from "@/types/sponsor";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -47,11 +51,22 @@ function CountdownTimer({ target }: { target: string }) {
 }
 
 export default function Home() {
-  const site = getSite();
-  const timeline = getTimeline();
-  const news = getNews();
-  const faq = getFaq();
-  const sponsors = getSponsors();
+  const [site, setSite] = useState<Record<string, unknown> | null>(null);
+  const [timeline, setTimeline] = useState<TimelineItem[]>([]);
+  const [news, setNews] = useState<NewsArticle[]>([]);
+  const [faq, setFaq] = useState<{ question: string; answer: string }[]>([]);
+  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+
+  useEffect(() => {
+    Promise.all([getSite(), getTimeline(), getNews(), getFaq(), getSponsors()])
+      .then(([s, t, n, f, sp]) => {
+        setSite(s);
+        setTimeline(t);
+        setNews(n);
+        setFaq(f);
+        setSponsors(sp);
+      });
+  }, []);
 
   useSeoMetadata({
     title: "CaseVerse 2026 | National SDG-Aligned Case Competition",
@@ -59,6 +74,13 @@ export default function Home() {
     ogTitle: "CaseVerse 2026 — Where Strategy Meets Sustainability",
     ogDescription: "National SDG-Aligned Case Competition organized by Rotaract Club of JKKNIU.",
   });
+
+  if (!site) return null;
+
+  const stats = (site.stats || []) as { value: string; label: string }[];
+  const sdgs = (site.sdgs || []) as { id: number; title: string; description: string }[];
+  const venue = site.venue as { name: string; address: string };
+  const contact = site.contact as { email: string; phone: string };
 
   return (
     <>
@@ -87,31 +109,16 @@ export default function Home() {
           >
             <motion.div variants={fadeUp}>
               <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6 border border-primary/20 px-4 py-2 rounded-full">
-                {site.subtitle}
+                {site.subtitle as string}
               </span>
             </motion.div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-[0.95]"
-            >
-              <span className="text-text">CASE</span>
-              <span className="text-primary">VERSE</span>
-              <br />
-              <span className="text-muted text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium mt-2 block">
-                {site.year}
-              </span>
-            </motion.h1>
+            <motion.div variants={fadeUp} className="flex justify-center">
+              <img src="/event-logo.png" alt="CaseVerse 2026" className="h-16 sm:h-20 md:h-24 lg:h-32 xl:h-36 w-auto" />
+            </motion.div>
 
-            <motion.p
-              variants={fadeUp}
-              className="mt-6 text-lg sm:text-xl text-muted max-w-2xl mx-auto leading-relaxed"
-            >
-              {site.tagline}
-            </motion.p>
-
-            <motion.div variants={fadeUp} className="mt-10">
-              <CountdownTimer target={site.countdownTarget} />
+            <motion.div variants={fadeUp} className="mt-6">
+              <CountdownTimer target={site.countdownTarget as string} />
             </motion.div>
 
             <motion.div variants={fadeUp} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -143,7 +150,7 @@ export default function Home() {
             variants={staggerContainer}
             className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
           >
-            {site.stats.map((stat) => (
+            {stats.map((stat) => (
               <motion.div
                 key={stat.label}
                 variants={fadeUp}
@@ -240,7 +247,7 @@ export default function Home() {
             variants={staggerContainer}
             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
           >
-            {site.sdgs.map((sdg) => (
+            {sdgs.map((sdg) => (
               <motion.div
                 key={sdg.id}
                 variants={fadeUp}
@@ -491,21 +498,21 @@ export default function Home() {
               <Building2 className="w-8 h-8 text-primary mx-auto mb-3" />
               <h3 className="font-heading text-sm font-semibold text-text">Location</h3>
               <p className="mt-2 text-xs text-muted leading-relaxed">
-                {site.venue.name}, {site.venue.address}
+                {venue.name}, {venue.address}
               </p>
             </div>
             <div className="p-6 rounded-xl bg-bg border border-border text-center">
               <Mail className="w-8 h-8 text-primary mx-auto mb-3" />
               <h3 className="font-heading text-sm font-semibold text-text">Email</h3>
-              <a href={`mailto:${site.contact.email}`} className="mt-2 text-xs text-muted hover:text-text transition-colors block">
-                {site.contact.email}
+              <a href={`mailto:${contact.email}`} className="mt-2 text-xs text-muted hover:text-text transition-colors block">
+                {contact.email}
               </a>
             </div>
             <div className="p-6 rounded-xl bg-bg border border-border text-center">
               <Phone className="w-8 h-8 text-primary mx-auto mb-3" />
               <h3 className="font-heading text-sm font-semibold text-text">Phone</h3>
-              <a href={`tel:${site.contact.phone}`} className="mt-2 text-xs text-muted hover:text-text transition-colors block">
-                {site.contact.phone}
+              <a href={`tel:${contact.phone}`} className="mt-2 text-xs text-muted hover:text-text transition-colors block">
+                {contact.phone}
               </a>
             </div>
           </div>

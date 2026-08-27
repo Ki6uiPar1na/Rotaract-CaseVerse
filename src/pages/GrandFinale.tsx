@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Presentation, MessageSquare } from "lucide-react";
 import { getSite } from "@/lib/data";
@@ -11,12 +12,16 @@ const fadeUp = {
 };
 
 export default function GrandFinale() {
-  const site = getSite();
+  const [site, setSite] = useState<Record<string, unknown> | null>(null);
+  useEffect(() => { getSite().then(setSite); }, []);
 
   useSeoMetadata({
     title: "Grand Finale | CaseVerse 2026",
     description: "The Grand Finale of CaseVerse 2026 — live pitch presentation and Focus Group Discussion at JKKNIU, Mymensingh.",
   });
+
+  if (!site) return null;
+  const venue = site.venue as { name: string; address: string; country: string };
 
   return (
     <div className="pt-24">
@@ -43,8 +48,8 @@ export default function GrandFinale() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto p-8 rounded-2xl bg-bg border border-border text-center">
             <MapPin className="w-10 h-10 text-primary mx-auto mb-4" />
-            <h3 className="font-heading text-xl font-bold text-text">{site.venue.name}</h3>
-            <p className="mt-2 text-sm text-muted">{site.venue.address}, {site.venue.country}</p>
+            <h3 className="font-heading text-xl font-bold text-text">{venue.name}</h3>
+            <p className="mt-2 text-sm text-muted">{venue.address}, {venue.country}</p>
           </div>
         </div>
       </section>

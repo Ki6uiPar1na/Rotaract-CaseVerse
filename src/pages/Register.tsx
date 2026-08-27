@@ -1,11 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, AlertCircle, ArrowRight, ArrowLeft, RotateCcw, Copy, Check } from "lucide-react";
+import { CheckCircle, AlertCircle, ArrowRight, ArrowLeft, RotateCcw, Copy, Check, Lock } from "lucide-react";
+import { Link } from "react-router-dom";
 import { generateId } from "@/lib/utils";
 import { storage } from "@/lib/storage";
 import { STORAGE_KEYS } from "@/lib/constants";
 import { api } from "@/lib/api";
 import { useSeoMetadata } from "@/hooks/useSeoMetadata";
+import { validateRegistration } from "@/lib/validate";
 import type { RegistrationDraft, TeamMember, RegistrationSubmission } from "@/types/registration";
 
 const fadeUp = {
@@ -50,11 +52,18 @@ export default function Register() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState<RegistrationSubmission | null>(null);
   const [copied, setCopied] = useState(false);
+  const [regOpen, setRegOpen] = useState<boolean | null>(null);
 
   useSeoMetadata({
     title: "Register Your Team | CaseVerse 2026",
     description: "Register your team of 3–4 members for the CaseVerse 2026 national SDG-aligned case competition.",
   });
+
+  useEffect(() => {
+    api.site.get().then((site) => {
+      setRegOpen(site.registrationOpen !== false);
+    }).catch(() => setRegOpen(true));
+  }, []);
 
   useEffect(() => {
     storage.set(STORAGE_KEYS.REGISTRATION_DRAFT, draft);
@@ -90,25 +99,21 @@ export default function Register() {
   }, []);
 
   const validateStep = (step: number): boolean => {
+    const allErrors = validateRegistration(draft as unknown as Record<string, unknown>);
     const newErrors: Record<string, string> = {};
 
     if (step === 0) {
-      if (!draft.teamName.trim()) newErrors.teamName = "Team name is required";
-      if (!draft.university.trim()) newErrors.university = "University is required";
-      if (!draft.contactEmail.trim()) newErrors.contactEmail = "Contact email is required";
-      if (!draft.contactPhone.trim()) newErrors.contactPhone = "Contact phone is required";
+      for (const k of ["teamName", "university", "contactEmail", "contactPhone"]) {
+        if (allErrors[k]) newErrors[k] = allErrors[k];
+      }
     } else if (step === 1) {
-      if (!draft.leader.name.trim()) newErrors["leader.name"] = "Name is required";
-      if (!draft.leader.email.trim()) newErrors["leader.email"] = "Email is required";
-      if (!draft.leader.phone.trim()) newErrors["leader.phone"] = "Phone is required";
-      if (!draft.leader.studentId.trim()) newErrors["leader.studentId"] = "Student ID is required";
+      for (const k of Object.keys(allErrors)) {
+        if (k.startsWith("leader.")) newErrors[k] = allErrors[k];
+      }
     } else if (step === 2) {
-      draft.members.forEach((member, i) => {
-        if (!member.name.trim()) newErrors[`member${i}.name`] = "Name is required";
-        if (!member.email.trim()) newErrors[`member${i}.email`] = "Email is required";
-        if (!member.phone.trim()) newErrors[`member${i}.phone`] = "Phone is required";
-        if (!member.studentId.trim()) newErrors[`member${i}.studentId`] = "Student ID is required";
-      });
+      for (const k of Object.keys(allErrors)) {
+        if (k.startsWith("member")) newErrors[k] = allErrors[k];
+      }
     }
 
     setErrors(newErrors);
@@ -173,7 +178,27 @@ export default function Register() {
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-text">Team Registration</h1>
           </motion.div>
 
-          {/* Progress Steps */}
+          {regOpen === false && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
+              <div className="w-16 h-16 rounded-full bg-danger/10 flex items-center justify-center mx-auto mb-6">
+                <Lock className="w-8 h-8 text-danger" />
+              </div>
+              <h2 className="font-heading text-2xl font-bold text-text mb-3">Registration Closed</h2>
+              <p className="text-sm text-muted max-w-md mx-auto mb-6">
+                The registration period has ended. You can check your team status or view results instead.
+              </p>
+              <div className="flex items-center justify-center gap-3">
+                <Link to="/dashboard" className="px-5 py-2.5 text-sm font-semibold bg-primary text-bg rounded-lg hover:bg-primary-hover transition-colors">
+                  Check Team Status
+                </Link>
+                <Link to="/results" className="px-5 py-2.5 text-sm font-medium border border-border rounded-lg text-muted hover:text-text hover:bg-surface-light transition-colors">
+                  View Results
+                </Link>
+              </div>
+            </motion.div>
+          )}
+
+          {regOpen !== false && (<>
           <div className="flex items-center justify-between mb-12 max-w-lg mx-auto">
             {steps.map((step, i) => (
               <div key={step} className="flex items-center">
@@ -352,6 +377,7 @@ export default function Register() {
               )}
             </div>
           )}
+          </>)}
         </div>
       </section>
     </div>

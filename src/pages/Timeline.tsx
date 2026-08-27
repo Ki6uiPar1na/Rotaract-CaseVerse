@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { api } from "@/lib/api";
+import timeline from "@/data/timeline.json";
 import type { TimelineItem } from "@/types/timeline";
+
+const typedTimeline = timeline as unknown as TimelineItem[];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -61,8 +62,7 @@ function TimelineItemCard({ item, index }: { item: TimelineItem; index: number }
 }
 
 export default function Timeline() {
-  const [timeline, setTimeline] = useState<TimelineItem[]>([]);
-  useEffect(() => { api.timeline.list().then(setTimeline).catch(() => {}); }, []);
+  const timelineData = typedTimeline;
 
   return (
     <div className="pt-24">
@@ -78,7 +78,7 @@ export default function Timeline() {
       <section className="pb-20 lg:pb-28">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}>
-            {timeline.map((item, index) => (<TimelineItemCard key={item.id} item={item} index={index} />))}
+            {timelineData.map((item, index) => (<TimelineItemCard key={item.id} item={item} index={index} />))}
           </motion.div>
         </div>
       </section>

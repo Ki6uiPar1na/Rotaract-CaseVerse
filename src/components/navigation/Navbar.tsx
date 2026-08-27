@@ -8,12 +8,13 @@ import { getSite } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
-  const site = getSite();
-  const navItems = site.navigation;
+  const [site, setSite] = useState<Record<string, unknown> | null>(null);
   const { isScrolled } = useScrollPosition();
   const { isOpen, toggle, close } = useMobileMenu();
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  useEffect(() => { getSite().then(setSite); }, []);
 
   useEffect(() => {
     close();
@@ -21,6 +22,8 @@ export default function Navbar() {
   }, [location.pathname, close]);
 
   const isActive = (path: string) => location.pathname === path;
+  const navItems = (site?.navigation || []) as { label: string; path: string; children?: { label: string; path: string }[] }[];
+  const registrationOpen = site?.registrationOpen !== false;
 
   return (
     <nav
@@ -34,7 +37,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 lg:h-22">
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <img src="/event-logo.png" alt="CaseVerse 2026" className="h-10 sm:h-14 w-auto" />
+            <img src="/event-logo.png" alt="CaseVerse 2026" className="h-7 sm:h-9 w-auto" />
           </Link>
 
           {/* Desktop Nav */}
@@ -103,10 +106,10 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
             <Link
-              to="/register"
+              to={registrationOpen ? "/register" : "/dashboard"}
               className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold bg-primary text-bg rounded-lg hover:bg-primary-hover transition-colors"
             >
-              REGISTER NOW
+              {registrationOpen ? "REGISTER NOW" : "CHECK RESULTS"}
             </Link>
           </div>
 
@@ -184,11 +187,11 @@ export default function Navbar() {
             ))}
             <div className="pt-4">
               <Link
-                to="/register"
+                to={registrationOpen ? "/register" : "/dashboard"}
                 onClick={close}
                 className="block w-full text-center px-5 py-3 text-sm font-semibold bg-primary text-bg rounded-lg hover:bg-primary-hover transition-colors"
               >
-                REGISTER NOW
+                {registrationOpen ? "REGISTER NOW" : "CHECK RESULTS"}
               </Link>
             </div>
           </div>

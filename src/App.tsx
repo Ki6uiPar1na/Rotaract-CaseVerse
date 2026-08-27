@@ -1,8 +1,6 @@
 import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
-import AdminLayout from "@/admin/components/AdminLayout";
-import { useAdminAuth } from "@/admin/hooks/useAdminAuth";
 
 const Home = lazy(() => import("@/pages/Home"));
 const About = lazy(() => import("@/pages/About"));
@@ -21,17 +19,6 @@ const Contact = lazy(() => import("@/pages/Contact"));
 const Register = lazy(() => import("@/pages/Register"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
-
-// Admin pages
-const AdminLogin = lazy(() => import("@/admin/pages/AdminLogin"));
-const AdminDashboard = lazy(() => import("@/admin/pages/AdminDashboard"));
-const AdminRegistrations = lazy(() => import("@/admin/pages/AdminRegistrations"));
-const AdminSponsors = lazy(() => import("@/admin/pages/AdminSponsors"));
-const AdminJudges = lazy(() => import("@/admin/pages/AdminJudges"));
-const AdminNews = lazy(() => import("@/admin/pages/AdminNews"));
-const AdminResults = lazy(() => import("@/admin/pages/AdminResults"));
-const AdminTimeline = lazy(() => import("@/admin/pages/AdminTimeline"));
-const AdminSettings = lazy(() => import("@/admin/pages/AdminSettings"));
 
 function PageLoader() {
   return (
@@ -52,42 +39,11 @@ function ScrollToTop() {
   return null;
 }
 
-function AdminRoutes() {
-  const { isAuthenticated, login, logout } = useAdminAuth();
-
-  if (!isAuthenticated) {
-    return (
-      <Suspense fallback={<PageLoader />}>
-        <AdminLogin onLogin={login} />
-      </Suspense>
-    );
-  }
-
-  return (
-    <AdminLayout onLogout={logout}>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route index element={<AdminDashboard />} />
-          <Route path="registrations" element={<AdminRegistrations />} />
-          <Route path="sponsors" element={<AdminSponsors />} />
-          <Route path="judges" element={<AdminJudges />} />
-          <Route path="news" element={<AdminNews />} />
-          <Route path="results" element={<AdminResults />} />
-          <Route path="timeline" element={<AdminTimeline />} />
-          <Route path="settings" element={<AdminSettings />} />
-          <Route path="*" element={<Navigate to="/admin" replace />} />
-        </Routes>
-      </Suspense>
-    </AdminLayout>
-  );
-}
-
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        {/* Public Routes */}
         <Route element={<Layout />}>
           <Route path="/" element={<Suspense fallback={<PageLoader />}><Home /></Suspense>} />
           <Route path="/about" element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />
@@ -108,10 +64,6 @@ export default function App() {
           <Route path="/dashboard" element={<Suspense fallback={<PageLoader />}><Dashboard /></Suspense>} />
         </Route>
 
-        {/* Admin Routes */}
-        <Route path="/admin/*" element={<AdminRoutes />} />
-
-        {/* 404 */}
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
     </BrowserRouter>

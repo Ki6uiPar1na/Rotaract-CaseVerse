@@ -9,6 +9,7 @@ export interface ResultPhase {
 
 export interface ResultEntry {
   rank: number;
+  teamCode: string;
   teamName: string;
   university: string;
   members?: string[];

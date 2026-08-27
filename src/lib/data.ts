@@ -1,13 +1,3 @@
-import site from "@/data/site.json";
-import competition from "@/data/competition.json";
-import rounds from "@/data/rounds.json";
-import timeline from "@/data/timeline.json";
-import sponsorsData from "@/data/sponsors.json";
-import judgesData from "@/data/judges.json";
-import news from "@/data/news.json";
-import faq from "@/data/faq.json";
-import organizersData from "@/data/organizers.json";
-import resultsData from "@/data/results.json";
 import type { Sponsor } from "@/types/sponsor";
 import type { Judge } from "@/types/judge";
 import type { Organizer } from "@/types/organizer";
@@ -15,78 +5,77 @@ import type { TimelineItem } from "@/types/timeline";
 import type { ResultPhase } from "@/types/result";
 import type { NewsArticle } from "@/types/news";
 
-const sponsors = sponsorsData as Sponsor[];
-const judges = judgesData as Judge[];
-const organizers = organizersData as Organizer[];
-const typedTimeline = timeline as unknown as TimelineItem[];
-const results = resultsData as ResultPhase[];
-const typedNews = news as NewsArticle[];
+const cache: Record<string, unknown> = {};
 
-export const data = {
-  site,
-  competition,
-  rounds,
-  timeline: typedTimeline,
-  sponsors,
-  judges,
-  news: typedNews,
-  faq,
-  organizers,
-  results,
-};
-
-export function getSite() {
-  return data.site;
+async function apiFetch<T>(path: string): Promise<T> {
+  if (cache[path]) return cache[path] as T;
+  const res = await fetch(`/api${path}`);
+  if (!res.ok) throw new Error(`API error ${res.status} for ${path}`);
+  const data = await res.json();
+  cache[path] = data;
+  return data;
 }
 
-export function getCompetition() {
-  return data.competition;
+export function clearCache() {
+  Object.keys(cache).forEach((k) => delete cache[k]);
 }
 
-export function getRounds() {
-  return data.rounds;
+export async function getSite() {
+  return apiFetch<Record<string, unknown>>("/site");
 }
 
-export function getRoundById(id: string) {
-  return data.rounds.find((r) => r.id === id);
+export async function getCompetition() {
+  return apiFetch<Record<string, unknown>>("/competition");
 }
 
-export function getTimeline() {
-  return data.timeline;
+export async function getRounds() {
+  return apiFetch<Record<string, unknown>[]>("/rounds");
 }
 
-export function getSponsors() {
-  return data.sponsors;
+export async function getRoundById(id: string) {
+  const rounds = await getRounds();
+  return rounds.find((r) => r.id === id);
 }
 
-export function getSponsorsByCategory(category: string) {
-  return data.sponsors.filter((s) => s.category === category);
+export async function getTimeline() {
+  return apiFetch<TimelineItem[]>("/timeline");
 }
 
-export function getJudges() {
-  return data.judges;
+export async function getSponsors() {
+  return apiFetch<Sponsor[]>("/sponsors");
 }
 
-export function getNews() {
-  return data.news;
+export async function getSponsorsByCategory(category: string) {
+  const sponsors = await getSponsors();
+  return sponsors.filter((s) => s.category === category);
 }
 
-export function getNewsBySlug(slug: string) {
-  return data.news.find((n) => n.slug === slug);
+export async function getJudges() {
+  return apiFetch<Judge[]>("/judges");
 }
 
-export function getFeaturedNews() {
-  return data.news.filter((n) => n.featured);
+export async function getNews() {
+  return apiFetch<NewsArticle[]>("/news");
 }
 
-export function getFaq() {
-  return data.faq;
+export async function getNewsBySlug(slug: string) {
+  const news = await getNews();
+  return news.find((n) => n.slug === slug);
 }
 
-export function getOrganizers() {
-  return data.organizers;
+export async function getFeaturedNews() {
+  const news = await getNews();
+  return news.filter((n) => n.featured);
 }
 
-export function getResults() {
-  return data.results;
+export async function getFaq() {
+  return apiFetch<{ question: string; answer: string }[]>("/faq");
+}
+
+export async function getOrganizers() {
+  return apiFetch<Organizer[]>("/organizers");
+}
+
+export async function getResults() {
+  return apiFetch<ResultPhase[]>("/results");
 }

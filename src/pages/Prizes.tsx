@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Medal, Award, ScrollText, Star } from "lucide-react";
 import { getCompetition } from "@/lib/data";
@@ -13,7 +14,11 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function Prizes() {
-  const competition = getCompetition();
+  const [competition, setCompetition] = useState<Record<string, unknown> | null>(null);
+  useEffect(() => { getCompetition().then(setCompetition); }, []);
+  if (!competition) return null;
+
+  const prizes = (competition.prizes || []) as { place: string; title: string; description: string; icon: string }[];
 
   return (
     <div className="pt-24">
@@ -32,7 +37,7 @@ export default function Prizes() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading title="Awards" description="Prize details will be announced closer to the competition. Here's what to expect." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {competition.prizes.map((prize) => (
+            {prizes.map((prize) => (
               <motion.div
                 key={prize.place}
                 initial={{ opacity: 0, y: 20 }}

@@ -1,9 +1,15 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { getSite } from "@/lib/data";
 
 export default function Footer() {
-  const site = getSite();
+  const [site, setSite] = useState<Record<string, unknown> | null>(null);
+  useEffect(() => { getSite().then(setSite); }, []);
+  if (!site) return null;
+
+  const venue = site.venue as { name: string; address: string; country: string };
+  const contact = site.contact as { phone: string; email: string };
 
   return (
     <footer className="bg-surface border-t border-border">
@@ -14,7 +20,7 @@ export default function Footer() {
             <Link to="/" className="inline-block">
               <img src="/event-logo.png" alt="CaseVerse 2026" className="h-12 w-auto" />
             </Link>
-            <p className="mt-1 text-sm text-muted font-heading">{site.tagline}</p>
+            <p className="mt-1 text-sm text-muted font-heading">{site.tagline as string}</p>
             <p className="mt-3 text-sm text-muted leading-relaxed">
               Organized by Rotaract Club of Jatiya Kabi Kazi Nazrul Islam University.
             </p>
@@ -79,25 +85,25 @@ export default function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-muted mt-0.5 shrink-0" />
                 <span className="text-sm text-muted leading-relaxed">
-                  {site.venue.name}, {site.venue.address}, {site.venue.country}
+                  {venue.name}, {venue.address}, {venue.country}
                 </span>
               </li>
               <li>
                 <a
-                  href={`tel:${site.contact.phone}`}
+                  href={`tel:${contact.phone}`}
                   className="flex items-center gap-2.5 text-sm text-muted hover:text-text transition-colors"
                 >
                   <Phone className="w-4 h-4 shrink-0" />
-                  {site.contact.phone}
+                  {contact.phone}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${site.contact.email}`}
+                  href={`mailto:${contact.email}`}
                   className="flex items-center gap-2.5 text-sm text-muted hover:text-text transition-colors"
                 >
                   <Mail className="w-4 h-4 shrink-0" />
-                  {site.contact.email}
+                  {contact.email}
                 </a>
               </li>
             </ul>
@@ -121,12 +127,6 @@ export default function Footer() {
               className="text-xs text-muted hover:text-text transition-colors"
             >
               Terms &amp; Conditions
-            </Link>
-            <Link
-              to="/admin"
-              className="text-xs text-muted hover:text-text transition-colors"
-            >
-              Admin
             </Link>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Download } from "lucide-react";
 import { getRoundById } from "@/lib/data";
@@ -12,11 +13,13 @@ const fadeUp = {
 };
 
 export default function RoundDetails({ roundId }: { roundId: string }) {
-  const round = getRoundById(roundId);
+  const [round, setRound] = useState<Record<string, unknown> | null>(null);
+
+  useEffect(() => { getRoundById(roundId).then((r) => setRound(r ?? null)); }, [roundId]);
 
   useSeoMetadata({
     title: round ? `${round.title} | CaseVerse 2026` : "Round | CaseVerse 2026",
-    description: round?.description,
+    description: round?.description as string,
   });
 
   if (!round) {
@@ -27,6 +30,11 @@ export default function RoundDetails({ roundId }: { roundId: string }) {
     );
   }
 
+  const requirements = (round.requirements || []) as string[];
+  const guidelines = (round.guidelines || []) as string[];
+  const documents = (round.documents || []) as { name: string; url: string }[];
+  const faq = (round.faq || []) as { question: string; answer: string }[];
+
   return (
     <div className="pt-24">
       <section className="py-20 lg:py-28">
@@ -34,14 +42,14 @@ export default function RoundDetails({ roundId }: { roundId: string }) {
           <motion.div initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}>
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                Round {String(round.number).padStart(2, "0")}
+                Round {String(round.number as number).padStart(2, "0")}
               </span>
             </motion.div>
             <motion.h1 variants={fadeUp} className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-text leading-tight max-w-3xl">
-              {round.title}
+              {round.title as string}
             </motion.h1>
-            <motion.p variants={fadeUp} className="mt-4 text-lg text-primary font-medium">{round.subtitle}</motion.p>
-            <motion.p variants={fadeUp} className="mt-6 text-lg text-muted leading-relaxed max-w-3xl">{round.description}</motion.p>
+            <motion.p variants={fadeUp} className="mt-4 text-lg text-primary font-medium">{round.subtitle as string}</motion.p>
+            <motion.p variants={fadeUp} className="mt-6 text-lg text-muted leading-relaxed max-w-3xl">{round.description as string}</motion.p>
           </motion.div>
         </div>
       </section>
@@ -51,7 +59,7 @@ export default function RoundDetails({ roundId }: { roundId: string }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading label="Requirements" title="Submission Requirements" align="left" />
           <ul className="space-y-3 max-w-3xl">
-            {round.requirements.map((req, i) => (
+            {requirements.map((req, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                 <span className="text-sm text-muted leading-relaxed">{req}</span>
@@ -66,7 +74,7 @@ export default function RoundDetails({ roundId }: { roundId: string }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading label="Guidelines" title="Important Guidelines" align="left" />
           <ul className="space-y-3 max-w-3xl">
-            {round.guidelines.map((guideline, i) => (
+            {guidelines.map((guideline, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
                 <span className="text-sm text-muted leading-relaxed">{guideline}</span>
@@ -77,12 +85,12 @@ export default function RoundDetails({ roundId }: { roundId: string }) {
       </section>
 
       {/* Documents */}
-      {round.documents && round.documents.length > 0 && (
+      {documents.length > 0 && (
         <section className="py-16 lg:py-20 bg-surface/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading label="Resources" title="Documents" align="left" />
             <div className="space-y-3 max-w-3xl">
-              {round.documents.map((doc, i) => (
+              {documents.map((doc, i) => (
                 <a
                   key={i}
                   href={doc.url}
@@ -98,12 +106,12 @@ export default function RoundDetails({ roundId }: { roundId: string }) {
       )}
 
       {/* Round FAQ */}
-      {round.faq && round.faq.length > 0 && (
+      {faq.length > 0 && (
         <section className="py-16 lg:py-20">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading label="FAQ" title="Round-Specific Questions" />
             <div className="space-y-3">
-              {round.faq.map((item, i) => (
+              {faq.map((item, i) => (
                 <details key={i} className="p-5 rounded-xl bg-surface border border-border">
                   <summary className="cursor-pointer font-heading text-sm font-semibold text-text list-none">
                     {item.question}

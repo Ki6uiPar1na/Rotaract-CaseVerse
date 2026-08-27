@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Users, MapPin, Target, FileText, ChevronRight } from "lucide-react";
@@ -12,13 +13,22 @@ const fadeUp = {
 };
 
 export default function Competition() {
-  const competition = getCompetition();
-  const rounds = getRounds();
+  const [competition, setCompetition] = useState<Record<string, unknown> | null>(null);
+  const [rounds, setRounds] = useState<Record<string, unknown>[]>([]);
+
+  useEffect(() => {
+    Promise.all([getCompetition(), getRounds()]).then(([c, r]) => { setCompetition(c); setRounds(r); });
+  }, []);
 
   useSeoMetadata({
     title: "Competition Overview | CaseVerse 2026",
     description: "Three-round national case competition. Teams of 3–4 students compete across case analysis, video content, and a live grand finale.",
   });
+
+  if (!competition) return null;
+
+  const teamSize = competition.teamSize as { min: number; max: number };
+  const eligibility = (competition.eligibility || []) as string[];
 
   return (
     <div className="pt-24">
@@ -32,7 +42,7 @@ export default function Competition() {
               Competition Overview
             </motion.h1>
             <motion.p variants={fadeUp} className="mt-6 text-lg text-muted leading-relaxed max-w-3xl">
-              {competition.description}
+              {competition.description as string}
             </motion.p>
           </motion.div>
         </div>
@@ -43,7 +53,7 @@ export default function Competition() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Users, label: "Team Size", value: `${competition.teamSize.min}–${competition.teamSize.max} members` },
+              { icon: Users, label: "Team Size", value: `${teamSize.min}–${teamSize.max} members` },
               { icon: Target, label: "Target Teams", value: `${competition.targetParticipation}+` },
               { icon: FileText, label: "Rounds", value: "3" },
               { icon: MapPin, label: "Venue", value: "JKKNIU, Mymensingh" },
@@ -63,7 +73,7 @@ export default function Competition() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading label="Eligibility" title="Who Can Participate?" align="left" />
           <ul className="space-y-3 max-w-3xl">
-            {competition.eligibility.map((item, i) => (
+            {eligibility.map((item, i) => (
               <li key={i} className="flex items-start gap-3 text-muted">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
                 <span className="text-sm leading-relaxed">{item}</span>
@@ -80,16 +90,16 @@ export default function Competition() {
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {rounds.map((round) => (
               <Link
-                key={round.id}
-                to={round.id === "grand-finale" ? "/competition/grand-finale" : `/competition/${round.id}`}
+                key={round.id as string}
+                to={(round.id as string) === "grand-finale" ? "/competition/grand-finale" : `/competition/${round.id}`}
                 className="group p-8 rounded-2xl bg-bg border border-border hover:border-primary/30 transition-all duration-300"
               >
                 <span className="font-heading text-5xl font-bold text-primary/20 group-hover:text-primary/40 transition-colors">
-                  0{round.number}
+                  0{round.number as number}
                 </span>
-                <h3 className="mt-4 font-heading text-xl font-bold text-text">{round.title}</h3>
-                <p className="mt-1 text-sm text-primary font-medium">{round.subtitle}</p>
-                <p className="mt-3 text-sm text-muted leading-relaxed">{round.description}</p>
+                <h3 className="mt-4 font-heading text-xl font-bold text-text">{round.title as string}</h3>
+                <p className="mt-1 text-sm text-primary font-medium">{round.subtitle as string}</p>
+                <p className="mt-3 text-sm text-muted leading-relaxed">{round.description as string}</p>
                 <span className="inline-flex items-center gap-1 mt-4 text-sm font-medium text-primary group-hover:gap-2 transition-all">
                   Details <ChevronRight className="w-4 h-4" />
                 </span>
@@ -105,7 +115,7 @@ export default function Competition() {
           <SectionHeading label="Venue" title="Grand Finale Location" />
           <div className="max-w-2xl mx-auto p-8 rounded-2xl bg-surface border border-border text-center">
             <MapPin className="w-10 h-10 text-primary mx-auto mb-4" />
-            <h3 className="font-heading text-xl font-bold text-text">{competition.venue}</h3>
+            <h3 className="font-heading text-xl font-bold text-text">{competition.venue as string}</h3>
             <p className="mt-3 text-sm text-muted leading-relaxed">
               The Grand Finale will be held at the JKKNIU campus in Trishal, Mymensingh.
               Directions and accommodation details will be shared with qualifying teams.

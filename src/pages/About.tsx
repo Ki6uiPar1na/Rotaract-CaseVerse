@@ -1,8 +1,10 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { getSite, getOrganizers } from "@/lib/data";
 import { useSeoMetadata } from "@/hooks/useSeoMetadata";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/ui/CTASection";
+import type { Organizer } from "@/types/organizer";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -10,13 +12,19 @@ const fadeUp = {
 };
 
 export default function About() {
-  const site = getSite();
-  const organizers = getOrganizers();
+  const [site, setSite] = useState<Record<string, unknown> | null>(null);
+  const [organizers, setOrganizers] = useState<Organizer[]>([]);
+
+  useEffect(() => {
+    Promise.all([getSite(), getOrganizers()]).then(([s, o]) => { setSite(s); setOrganizers(o); });
+  }, []);
 
   useSeoMetadata({
     title: "About CaseVerse 2026 | National SDG-Aligned Case Competition",
     description: "Learn about CaseVerse — a national SDG-aligned case competition bringing together university students from across Bangladesh.",
   });
+
+  if (!site) return null;
 
   return (
     <div className="pt-24">
@@ -52,7 +60,7 @@ export default function About() {
                 <SectionHeading label="What is CaseVerse?" title="A Platform for Future Leaders" align="left" />
               </motion.div>
               <motion.p variants={fadeUp} className="text-muted leading-relaxed mb-4">
-                {site.name} is organized by {organizers[0]?.name || "Rotaract Club of JKKNIU"} as part of its commitment to
+                {site.name as string} is organized by {organizers[0]?.name || "Rotaract Club of JKKNIU"} as part of its commitment to
                 fostering leadership, innovation, and sustainable thinking among university students.
               </motion.p>
               <motion.p variants={fadeUp} className="text-muted leading-relaxed">

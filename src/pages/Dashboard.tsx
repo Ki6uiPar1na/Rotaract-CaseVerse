@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, CheckCircle, Lock, Clock, Users, FileText, AlertCircle, Copy, Check } from "lucide-react";
+import { Search, CheckCircle, Lock, Clock, Users, FileText, AlertCircle, Copy, Check, Trophy } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useSeoMetadata } from "@/hooks/useSeoMetadata";
 import { api } from "@/lib/api";
 import type { RegistrationSubmission } from "@/types/registration";
 
 const statusConfig = {
-  locked: { icon: Lock, color: "text-muted", bg: "bg-surface-light", label: "Locked" },
+  locked: { icon: Lock, color: "text-muted", bg: "bg-surface-light", label: "Not Qualified" },
   pending: { icon: Clock, color: "text-warning", bg: "bg-warning/10", label: "Pending" },
-  submitted: { icon: FileText, color: "text-primary", bg: "bg-primary/10", label: "Submitted" },
-  reviewed: { icon: CheckCircle, color: "text-success", bg: "bg-success/10", label: "Reviewed" },
-  qualified: { icon: CheckCircle, color: "text-accent", bg: "bg-accent/10", label: "Qualified" },
-  participated: { icon: CheckCircle, color: "text-success", bg: "bg-success/10", label: "Participated" },
-  complete: { icon: CheckCircle, color: "text-success", bg: "bg-success/10", label: "Complete" },
+  submitted: { icon: FileText, color: "text-success", bg: "bg-success/10", label: "Qualified" },
+  reviewed: { icon: CheckCircle, color: "text-success", bg: "bg-success/10", label: "Qualified" },
+  qualified: { icon: CheckCircle, color: "text-success", bg: "bg-success/10", label: "Qualified" },
+  participated: { icon: CheckCircle, color: "text-success", bg: "bg-success/10", label: "Qualified" },
+  complete: { icon: CheckCircle, color: "text-success", bg: "bg-success/10", label: "Completed" },
 };
 
 function StatusCard({ label, status }: { label: string; status: string }) {
@@ -106,6 +107,17 @@ export default function Dashboard() {
                 </p>
               )}
             </div>
+          </motion.div>
+
+          {/* View All Results */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="max-w-lg mx-auto mt-6">
+            <Link
+              to="/results"
+              className="flex items-center justify-center gap-2 p-4 rounded-xl border border-border hover:border-primary/30 hover:bg-surface-light transition-colors"
+            >
+              <Trophy className="w-5 h-5 text-primary" />
+              <span className="text-sm font-semibold text-text">View All Results</span>
+            </Link>
           </motion.div>
 
           {/* Result */}

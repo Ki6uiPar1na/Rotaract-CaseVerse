@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
 import { getSite } from "@/lib/data";
@@ -8,7 +9,12 @@ const fadeUp = {
 };
 
 export default function Contact() {
-  const site = getSite();
+  const [site, setSite] = useState<Record<string, unknown> | null>(null);
+  useEffect(() => { getSite().then(setSite); }, []);
+  if (!site) return null;
+
+  const venue = site.venue as { name: string; address: string; country: string };
+  const contact = site.contact as { phone: string; email: string; website: string };
 
   return (
     <div className="pt-24">
@@ -35,29 +41,29 @@ export default function Contact() {
                 <MapPin className="w-6 h-6 text-primary mb-3" />
                 <h3 className="font-heading text-sm font-semibold text-text">Address</h3>
                 <p className="mt-2 text-sm text-muted leading-relaxed">
-                  {site.venue.name}<br />
-                  {site.venue.address}, {site.venue.country}
+                  {venue.name}<br />
+                  {venue.address}, {venue.country}
                 </p>
               </motion.div>
               <motion.div variants={fadeUp} className="p-6 rounded-xl bg-surface border border-border">
                 <Phone className="w-6 h-6 text-primary mb-3" />
                 <h3 className="font-heading text-sm font-semibold text-text">Phone</h3>
-                <a href={`tel:${site.contact.phone}`} className="mt-2 text-sm text-muted hover:text-text transition-colors block">
-                  {site.contact.phone}
+                <a href={`tel:${contact.phone}`} className="mt-2 text-sm text-muted hover:text-text transition-colors block">
+                  {contact.phone}
                 </a>
               </motion.div>
               <motion.div variants={fadeUp} className="p-6 rounded-xl bg-surface border border-border">
                 <Mail className="w-6 h-6 text-primary mb-3" />
                 <h3 className="font-heading text-sm font-semibold text-text">Email</h3>
-                <a href={`mailto:${site.contact.email}`} className="mt-2 text-sm text-muted hover:text-text transition-colors block">
-                  {site.contact.email}
+                <a href={`mailto:${contact.email}`} className="mt-2 text-sm text-muted hover:text-text transition-colors block">
+                  {contact.email}
                 </a>
               </motion.div>
               <motion.div variants={fadeUp} className="p-6 rounded-xl bg-surface border border-border">
                 <Globe className="w-6 h-6 text-primary mb-3" />
                 <h3 className="font-heading text-sm font-semibold text-text">Website</h3>
-                <a href={`https://${site.contact.website}`} target="_blank" rel="noopener noreferrer" className="mt-2 text-sm text-muted hover:text-text transition-colors block">
-                  {site.contact.website}
+                <a href={`https://${contact.website}`} target="_blank" rel="noopener noreferrer" className="mt-2 text-sm text-muted hover:text-text transition-colors block">
+                  {contact.website}
                 </a>
               </motion.div>
             </motion.div>
