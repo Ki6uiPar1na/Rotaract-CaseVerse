@@ -4,6 +4,7 @@ import { Trophy, Medal, Award, Clock, CheckCircle2, ChevronRight } from "lucide-
 import CTASection from "@/components/ui/CTASection";
 import { cn } from "@/lib/utils";
 import { api } from "@/lib/api";
+import resultsData from "@/data/results.json";
 import type { ResultPhase } from "@/types/result";
 
 const fadeUp = {
@@ -18,9 +19,9 @@ const phaseIcons: Record<string, typeof Trophy> = {
 };
 
 export default function Results() {
-  const [results, setResults] = useState<ResultPhase[]>([]);
+  const [results, setResults] = useState<ResultPhase[]>(() => resultsData as unknown as ResultPhase[]);
   useEffect(() => { api.results.list().then(setResults).catch(() => {}); }, []);
-  const [activePhase, setActivePhase] = useState("");
+  const [activePhase, setActivePhase] = useState(() => (resultsData as unknown as ResultPhase[])[0]?.id || "");
   const current = results.find((r) => r.id === activePhase);
 
   useEffect(() => { if (results.length && !activePhase) setActivePhase(results[0].id); }, [results, activePhase]);

@@ -6,17 +6,24 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import EmptyState from "@/components/ui/EmptyState";
 import { api } from "@/lib/api";
+import newsData from "@/data/news.json";
 import type { NewsArticle } from "@/types/news";
 
 export default function NewsDetails() {
   const { slug } = useParams<{ slug: string }>();
-  const [article, setArticle] = useState<NewsArticle | null>(null);
-  const [allNews, setAllNews] = useState<NewsArticle[]>([]);
+  const [article, setArticle] = useState<NewsArticle | null>(() => {
+    return (newsData as unknown as NewsArticle[]).find((n) => n.slug === slug) || null;
+  });
+  const [allNews, setAllNews] = useState<NewsArticle[]>(() => newsData as unknown as NewsArticle[]);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     if (slug) {
-      api.news.get(slug).then(setArticle).catch(() => setNotFound(true));
+      api.news.get(slug).then(setArticle).catch(() => {
+        const found = (newsData as unknown as NewsArticle[]).find((n) => n.slug === slug);
+        if (found) setArticle(found);
+        else setNotFound(true);
+      });
       api.news.list().then(setAllNews).catch(() => {});
     }
   }, [slug]);

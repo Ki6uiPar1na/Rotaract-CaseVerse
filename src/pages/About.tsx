@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { getSite, getOrganizers } from "@/lib/data";
+import { getSite, getOrganizers, data } from "@/lib/data";
 import { useSeoMetadata } from "@/hooks/useSeoMetadata";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/ui/CTASection";
@@ -12,11 +12,11 @@ const fadeUp = {
 };
 
 export default function About() {
-  const [site, setSite] = useState<Record<string, unknown> | null>(null);
-  const [organizers, setOrganizers] = useState<Organizer[]>([]);
+  const [site, setSite] = useState<Record<string, unknown> | null>(() => data.site);
+  const [organizers, setOrganizers] = useState<Organizer[]>(() => data.organizers);
 
   useEffect(() => {
-    Promise.all([getSite(), getOrganizers()]).then(([s, o]) => { setSite(s); setOrganizers(o); });
+    Promise.all([getSite(), getOrganizers()]).then(([s, o]) => { setSite(s); setOrganizers(o); }).catch(() => {});
   }, []);
 
   useSeoMetadata({

@@ -4,17 +4,17 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import { useMobileMenu } from "@/hooks/useMobileMenu";
-import { getSite } from "@/lib/data";
+import { getSite, data } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
-  const [site, setSite] = useState<Record<string, unknown> | null>(null);
+  const [site, setSite] = useState<Record<string, unknown> | null>(() => data.site);
   const { isScrolled } = useScrollPosition();
   const { isOpen, toggle, close } = useMobileMenu();
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  useEffect(() => { getSite().then(setSite); }, []);
+  useEffect(() => { getSite().then(setSite).catch(() => {}); }, []);
 
   useEffect(() => {
     close();

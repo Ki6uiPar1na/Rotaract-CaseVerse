@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
-import { getSite } from "@/lib/data";
+import { getSite, data } from "@/lib/data";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -9,8 +9,8 @@ const fadeUp = {
 };
 
 export default function Contact() {
-  const [site, setSite] = useState<Record<string, unknown> | null>(null);
-  useEffect(() => { getSite().then(setSite); }, []);
+  const [site, setSite] = useState<Record<string, unknown> | null>(() => data.site);
+  useEffect(() => { getSite().then(setSite).catch(() => {}); }, []);
   if (!site) return null;
 
   const venue = site.venue as { name: string; address: string; country: string };

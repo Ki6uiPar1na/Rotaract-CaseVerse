@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Users, Layers, Target, Trophy, Calendar, Newspaper, HelpCircle, ChevronRight, Building2, Mail, Phone } from "lucide-react";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useSeoMetadata } from "@/hooks/useSeoMetadata";
-import { getSite, getTimeline, getNews, getFaq, getSponsors } from "@/lib/data";
+import { getSite, getTimeline, getNews, getFaq, getSponsors, data } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/ui/CTASection";
 import EmptyState from "@/components/ui/EmptyState";
@@ -51,11 +51,11 @@ function CountdownTimer({ target }: { target: string }) {
 }
 
 export default function Home() {
-  const [site, setSite] = useState<Record<string, unknown> | null>(null);
-  const [timeline, setTimeline] = useState<TimelineItem[]>([]);
-  const [news, setNews] = useState<NewsArticle[]>([]);
-  const [faq, setFaq] = useState<{ question: string; answer: string }[]>([]);
-  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+  const [site, setSite] = useState<Record<string, unknown> | null>(() => data.site);
+  const [timeline, setTimeline] = useState<TimelineItem[]>(() => data.timeline);
+  const [news, setNews] = useState<NewsArticle[]>(() => data.news);
+  const [faq, setFaq] = useState<{ question: string; answer: string }[]>(() => data.faq);
+  const [sponsors, setSponsors] = useState<Sponsor[]>(() => data.sponsors);
 
   useEffect(() => {
     Promise.all([getSite(), getTimeline(), getNews(), getFaq(), getSponsors()])
@@ -65,7 +65,8 @@ export default function Home() {
         setNews(n);
         setFaq(f);
         setSponsors(sp);
-      });
+      })
+      .catch(() => {});
   }, []);
 
   useSeoMetadata({

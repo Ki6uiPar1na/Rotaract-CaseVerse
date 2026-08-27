@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Users, MapPin, Target, FileText, ChevronRight } from "lucide-react";
-import { getCompetition, getRounds } from "@/lib/data";
+import { getCompetition, getRounds, data } from "@/lib/data";
 import { useSeoMetadata } from "@/hooks/useSeoMetadata";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/ui/CTASection";
@@ -13,11 +13,11 @@ const fadeUp = {
 };
 
 export default function Competition() {
-  const [competition, setCompetition] = useState<Record<string, unknown> | null>(null);
-  const [rounds, setRounds] = useState<Record<string, unknown>[]>([]);
+  const [competition, setCompetition] = useState<Record<string, unknown> | null>(() => data.competition);
+  const [rounds, setRounds] = useState<Record<string, unknown>[]>(() => data.rounds);
 
   useEffect(() => {
-    Promise.all([getCompetition(), getRounds()]).then(([c, r]) => { setCompetition(c); setRounds(r); });
+    Promise.all([getCompetition(), getRounds()]).then(([c, r]) => { setCompetition(c); setRounds(r); }).catch(() => {});
   }, []);
 
   useSeoMetadata({

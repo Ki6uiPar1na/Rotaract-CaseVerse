@@ -4,6 +4,7 @@ import { Building2 } from "lucide-react";
 import EmptyState from "@/components/ui/EmptyState";
 import { SPONSOR_CATEGORIES } from "@/lib/constants";
 import { api } from "@/lib/api";
+import sponsorsData from "@/data/sponsors.json";
 import type { Sponsor } from "@/types/sponsor";
 
 const fadeUp = {
@@ -12,7 +13,7 @@ const fadeUp = {
 };
 
 export default function Sponsors() {
-  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+  const [sponsors, setSponsors] = useState<Sponsor[]>(() => sponsorsData as Sponsor[]);
   useEffect(() => { api.sponsors.list().then(setSponsors).catch(() => {}); }, []);
 
   const grouped = SPONSOR_CATEGORIES.map((cat) => ({ ...cat, sponsors: sponsors.filter((s) => s.category === cat.key) })).filter((cat) => cat.sponsors.length > 0);

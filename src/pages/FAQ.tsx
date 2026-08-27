@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ArrowLeft, HelpCircle } from "lucide-react";
-import { getFaq } from "@/lib/data";
+import { getFaq, data } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export default function FAQ() {
-  const [faq, setFaq] = useState<{ question: string; answer: string }[]>([]);
+  const [faq, setFaq] = useState<{ question: string; answer: string }[]>(() => data.faq);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  useEffect(() => { getFaq().then(setFaq); }, []);
+  useEffect(() => { getFaq().then(setFaq).catch(() => {}); }, []);
 
   const handleSelect = (index: number) => {
     setSelectedIndex(selectedIndex === index ? null : index);

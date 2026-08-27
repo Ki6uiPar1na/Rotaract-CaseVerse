@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"node server/index.js\" \"vite --host\"",
+    "frontend": "vite --host",
     "server": "node server/index.js",
     "seed": "node server/seed.js",
     "start": "node server/index.js & vite",

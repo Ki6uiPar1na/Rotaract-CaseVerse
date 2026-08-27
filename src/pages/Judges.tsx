@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { User } from "lucide-react";
 import EmptyState from "@/components/ui/EmptyState";
 import { api } from "@/lib/api";
+import judgesData from "@/data/judges.json";
 import type { Judge } from "@/types/judge";
 
 const fadeUp = {
@@ -11,7 +12,7 @@ const fadeUp = {
 };
 
 export default function Judges() {
-  const [judges, setJudges] = useState<Judge[]>([]);
+  const [judges, setJudges] = useState<Judge[]>(() => judgesData as Judge[]);
   useEffect(() => { api.judges.list().then(setJudges).catch(() => {}); }, []);
 
   return (

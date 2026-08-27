@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Download } from "lucide-react";
-import { getRoundById } from "@/lib/data";
+import { getRoundById, data } from "@/lib/data";
 import { useSeoMetadata } from "@/hooks/useSeoMetadata";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/ui/CTASection";
@@ -13,9 +13,13 @@ const fadeUp = {
 };
 
 export default function RoundDetails({ roundId }: { roundId: string }) {
-  const [round, setRound] = useState<Record<string, unknown> | null>(null);
+  const [round, setRound] = useState<Record<string, unknown> | null>(() => {
+    return data.rounds.find((r) => r.id === roundId) || null;
+  });
 
-  useEffect(() => { getRoundById(roundId).then((r) => setRound(r ?? null)); }, [roundId]);
+  useEffect(() => {
+    getRoundById(roundId).then((r) => setRound(r ?? null)).catch(() => {});
+  }, [roundId]);
 
   useSeoMetadata({
     title: round ? `${round.title} | CaseVerse 2026` : "Round | CaseVerse 2026",

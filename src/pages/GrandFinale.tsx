@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Presentation, MessageSquare } from "lucide-react";
-import { getSite } from "@/lib/data";
+import { getSite, data } from "@/lib/data";
 import { useSeoMetadata } from "@/hooks/useSeoMetadata";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/ui/CTASection";
@@ -12,8 +12,8 @@ const fadeUp = {
 };
 
 export default function GrandFinale() {
-  const [site, setSite] = useState<Record<string, unknown> | null>(null);
-  useEffect(() => { getSite().then(setSite); }, []);
+  const [site, setSite] = useState<Record<string, unknown> | null>(() => data.site);
+  useEffect(() => { getSite().then(setSite).catch(() => {}); }, []);
 
   useSeoMetadata({
     title: "Grand Finale | CaseVerse 2026",

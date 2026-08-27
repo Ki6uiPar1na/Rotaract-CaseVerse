@@ -5,6 +5,7 @@ import { Search, Newspaper, ExternalLink } from "lucide-react";
 import EmptyState from "@/components/ui/EmptyState";
 import { NEWS_CATEGORIES } from "@/lib/constants";
 import { api } from "@/lib/api";
+import newsData from "@/data/news.json";
 import type { NewsArticle } from "@/types/news";
 
 const fadeUp = {
@@ -13,7 +14,7 @@ const fadeUp = {
 };
 
 export default function News() {
-  const [allNews, setAllNews] = useState<NewsArticle[]>([]);
+  const [allNews, setAllNews] = useState<NewsArticle[]>(() => newsData as unknown as NewsArticle[]);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
 

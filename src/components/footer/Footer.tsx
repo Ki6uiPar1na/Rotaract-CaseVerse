@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { getSite } from "@/lib/data";
+import { getSite, data } from "@/lib/data";
 
 export default function Footer() {
-  const [site, setSite] = useState<Record<string, unknown> | null>(null);
-  useEffect(() => { getSite().then(setSite); }, []);
+  const [site, setSite] = useState<Record<string, unknown> | null>(() => data.site);
+  useEffect(() => { getSite().then(setSite).catch(() => {}); }, []);
   if (!site) return null;
 
   const venue = site.venue as { name: string; address: string; country: string };

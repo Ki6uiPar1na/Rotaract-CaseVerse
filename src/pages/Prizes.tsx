@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Medal, Award, ScrollText, Star } from "lucide-react";
-import { getCompetition } from "@/lib/data";
+import { getCompetition, data } from "@/lib/data";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/ui/CTASection";
 
@@ -14,8 +14,8 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function Prizes() {
-  const [competition, setCompetition] = useState<Record<string, unknown> | null>(null);
-  useEffect(() => { getCompetition().then(setCompetition); }, []);
+  const [competition, setCompetition] = useState<Record<string, unknown> | null>(() => data.competition);
+  useEffect(() => { getCompetition().then(setCompetition).catch(() => {}); }, []);
   if (!competition) return null;
 
   const prizes = (competition.prizes || []) as { place: string; title: string; description: string; icon: string }[];
